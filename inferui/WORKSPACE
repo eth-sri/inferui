@@ -1,0 +1,51 @@
+load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository", "new_git_repository")
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
+
+git_repository(
+    name = "bazel_skylib",
+    remote = "https://github.com/bazelbuild/bazel-skylib.git",
+    tag = "0.6.0",  # change this to use a different release
+)
+
+git_repository(
+    name = "gtest",
+    remote = "https://github.com/google/googletest",
+    tag = "release-1.8.1",
+)
+
+http_archive(
+    name = "six_archive",
+    build_file = "six.BUILD",
+    sha256 = "105f8d68616f8248e24bf0e9372ef04d3cc10104f1980f54d57b2ce73a5ad56a",
+    url = "https://pypi.python.org/packages/source/s/six/six-1.10.0.tar.gz#md5=34eed507548117b2ab523ab14b2f8b55",
+)
+
+bind(
+    name = "six",
+    actual = "@six_archive//:six",
+)
+
+new_git_repository(
+    name = "zlib_repo",
+    build_file = "zlib.BUILD",
+    commit = "cacf7f1d4e3d44d871b605da3b647f07d718623f",
+    remote = "https://github.com/madler/zlib.git",
+)
+
+bind(
+    name = "zlib",
+    actual = "@zlib_repo//:zlib",
+)
+
+git_repository(
+    name = "protobuf",
+    remote = "https://github.com/google/protobuf",
+    tag = "v3.7.0",
+)
+
+new_git_repository(
+    name = "jsonrpclib",
+    build_file = "jsonrpclib.BUILD",
+    commit = "e7cb8ba791bd89109022ff7b516787f16922a39b",
+    remote = "https://github.com/joshmarshall/jsonrpclib.git",
+)
